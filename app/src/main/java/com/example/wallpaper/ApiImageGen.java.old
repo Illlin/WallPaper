@@ -1,0 +1,155 @@
+package com.example.wallpaper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public class ApiImageGen {
+
+    private String apiKey;
+    private String baseUrl;
+    private String prompt;
+    private String negPrompt;
+    private String urlResource;
+    private String httpMethod;
+    private String urlPath;
+    private String lastResponse;
+    private String payload;
+    private HashMap<String, String> parameters;
+    private Map<String, List<String>> headerFields;
+
+    public ApiImageGen(String baseUrl, String prompt, String negPrompt, String apiKey){
+        setBaseUrl(baseUrl);
+        setApiKey(apiKey);
+        this.prompt = prompt;
+        this.negPrompt = negPrompt;
+        this.urlResource = "";
+        this.urlPath = "";
+        this.httpMethod = "POST";
+        parameters = new HashMap<>();
+        lastResponse = "";
+        payload = "";
+        headerFields = new HashMap<>();
+        System.setProperty("jsse.enableSNIExtension", "false");
+    }
+
+    public ApiImageGen setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+        if (!baseUrl.substring(baseUrl.length() - 1).equals("/")) {
+            this.baseUrl += "/";
+        }
+        return this;
+    }
+
+    public ApiImageGen setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+        if (apiKey.length() == 0){
+            this.apiKey = "0000000000";
+        }
+        return this;
+    }
+
+    public ApiImageGen setUrlResource(String urlResource){
+        this.urlResource = urlResource;
+        return this;
+    }
+
+    public final ApiImageGen setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+        return this;
+    }
+
+    public ApiImageGen setHttpMethod(String httpMethod) {
+        this.httpMethod = httpMethod;
+        return this;
+    }
+
+    public String getLastResponse(){
+        return lastResponse;
+    }
+
+    public Map<String, List<String>> getHeaderFields() {
+        return headerFields;
+    }
+
+    public ApiImageGen setParameters(HashMap<String, String> parameters) {
+        this.parameters = parameters;
+        return this;
+    }
+
+    public ApiImageGen clearParameters() {
+        this.parameters.clear();
+        return this;
+    }
+
+    public ApiImageGen setParameter(String key, String value) {
+        this.parameters.put(key, value);
+        return this;
+    }
+
+    public ApiImageGen removeParameter(String key) {
+        this.parameters.remove(key);
+        return this;
+    }
+
+    public ApiImageGen clearAll(){
+        parameters.clear();
+        baseUrl = "";
+        this.prompt = "";
+        this.negPrompt = "";
+        this.urlResource = "";
+        this.urlPath = "";
+        this.httpMethod = "";
+        lastResponse = "";
+        payload = "";
+        headerFields.clear();
+        return this;
+    }
+
+    public JSONObject getLastResponseAsJsonObject() {
+        try {
+            return new JSONObject(String.valueOf(lastResponse));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public JSONArray getLastResponseAsJsonArray() {
+        try {
+            return new JSONArray(String.valueOf(lastResponse));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String execute() {
+        String line;
+        StringBuilder outputStringBuilder = new StringBuilder();
+
+        try {
+            StringBuilder urlString = new StringBuilder(baseUrl + urlResource);
+            // todo code
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!outputStringBuilder.toString().equals("")){
+            lastResponse = outputStringBuilder.toString();
+        }
+
+        return outputStringBuilder.toString();
+    }
+}
